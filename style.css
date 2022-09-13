@@ -1,0 +1,58 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "DM sans", sans-serif;
+}
+
+header{
+display: flex;
+flex-direction: column;
+align-items: center;
+}   
+
+.logo {
+  width: 50.48px    ;
+  height: 46.29px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 47px;
+   margin: 0;
+
+
+  text-align: center;
+
+  color: #d04f4f;
+}
+.search {
+}
+.main-search {
+  width: 1240px;
+  height: 69px;
+  background-color: #e7e7e7;
+  border: none;
+  padding-left: 30px;
+ font-size: 18px;
+}
+
+.main-search:focus {
+  outline: none;
+}
+
+.card{
+    width: 380px;
+    height: 364px;
+    border-radius: 5px;
+    bottom: -21.33%;
+    background: #E7E7E7;
+    border-radius: 5px;
+    margin-top: 30px;
+}
