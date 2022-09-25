@@ -17,6 +17,7 @@ align-items: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
 }
 
 .title {
@@ -32,8 +33,9 @@ align-items: center;
 
   color: #d04f4f;
 }
-.search {
-}
+
+/* Recherche */
+
 .main-search {
   width: 1240px;
   height: 69px;
@@ -41,11 +43,70 @@ align-items: center;
   border: none;
   padding-left: 30px;
  font-size: 18px;
+ border-radius: 5px;
 }
 
 .main-search:focus {
   outline: none;
 }
+
+/* input search */
+
+.input-sort{
+  display: block;
+  margin-top: 30px;
+}
+
+.ingredients_input{
+  width: 170px;
+  height: 69px;
+  border-radius: 5px;
+  background-color: #3282F7;
+  border: none;
+  font-size: 18px;
+  color: #fff;
+  margin-right: 10px;
+  padding-left: 10px;
+}
+.ingredients_input::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.device_input{
+  width: 170px;
+  height: 69px;
+  border-radius: 5px;
+  background-color: #68D9A4;
+  border: none;
+  color: #fff;
+  margin-right: 10px;
+  font-size: 18px;
+  padding-left: 10px;
+}
+.device_input::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+.ustensiles_input{
+  width: 170px;
+  height: 69px;
+  border-radius: 5px;
+  background-color: #ED6454;
+  border: none;
+  color: #fff;
+  margin-right: 10px;
+  font-size: 18px;
+  padding-left: 10px;
+}
+.ustensiles_input::placeholder {
+  color: white;
+  opacity: 1;
+}
+
+
+/* cards */
 
 .card{
     width: 380px;
@@ -55,4 +116,40 @@ align-items: center;
     background: #E7E7E7;
     border-radius: 5px;
     margin-top: 30px;
+}
+
+img{
+    width: 380px;
+    height: 200px;
+    border-radius: 5px 0;
+    background-color: #C7BEBE;  
+}
+
+h2{
+  margin-left: 20px;
+  font-size: 18px;
+}
+
+.info{
+  display: flex;
+  flex-direction: row;
+  align-items: center ;
+  margin-top: 0;
+  column-gap: 50px;
+}
+
+.ingredients{
+  width: 30%;
+  margin-left: 20px;
+  font-size: 12px;
+  color: black;
+  line-height :14.4px;
+}
+
+.description{
+  width: 40%;
+  margin-left: 20px;
+  font-size: 12px;
+  color: black;
+  line-height: 12px;
 }
