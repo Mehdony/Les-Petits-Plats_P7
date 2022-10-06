@@ -1,3 +1,5 @@
+// Model + vue 
+
 export const displayRecipe = (recipe) => {
     const card = document.createElement("div");
     card.classList.add("card");
@@ -40,7 +42,7 @@ export const displayRecipe = (recipe) => {
     card.appendChild(infosContainer);
     infosContainer.appendChild(ingredientsList);
     infosContainer.appendChild(description);
-    console.log(card);
+    // console.log(card);
     const recipeContainer = document.querySelector(".recipes-container");
     recipeContainer.appendChild(card);
     return card;
