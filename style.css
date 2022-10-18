@@ -1,8 +1,16 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: "DM sans", sans-serif;
+
+  
 }
 
 header{
@@ -63,6 +71,7 @@ align-items: center;
   color: #fff;
   padding-left: 22px;
 }
+
 .ingredients_input::placeholder {
   color: white;
   opacity: 1;
@@ -192,24 +201,29 @@ column-gap: 7px;
   margin-top: 30px;
   width: 1272px;
   background-color: sandybrown;
-  row-gap: 20px;
+  column-gap: 20px;
 }
 
 .tags-container {
- 
+ overflow-x: hidden;
   background-color: pink;
 }
 
 #ingredient-tags{
-display: none;
+  display: none;
+  background-color: #C7BEBE;
+  max-height: 300px;
 
 }
 
 .tags-ul{
-
+columns: 3;
+overflow: auto;
 }
 
 
 .ingredient-tag{
-
+list-style: none;
+width: 150px;
+break-inside: avoid;
 }

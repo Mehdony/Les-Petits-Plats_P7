@@ -120,13 +120,17 @@ document.querySelector(".ingredients_input").addEventListener("input", (e) => {
 
 let click = false;
 
-document.querySelector(".ingredients_input").addEventListener("click", (e) => {
+const inputContainer = document.querySelector(".ingredients_input")
+inputContainer.addEventListener("click", (e) => {
   if (!click) {
   document.querySelector("#ingredient-tags").style.display = "block";
+ inputContainer.style.width = "100%";
   click = true;
   }else{  
   document.querySelector("#ingredient-tags").style.display = "none";
+  inputContainer.style.width = "170px";
   click = false;
+
   }
 });
 
