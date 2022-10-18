@@ -53,11 +53,6 @@ align-items: center;
 
 /* input search */
 
-.input-sort{
-  display: block;
-  margin-top: 30px;
-}
-
 .ingredients_input{
   width: 170px;
   height: 69px;
@@ -66,8 +61,7 @@ align-items: center;
   border: none;
   font-size: 18px;
   color: #fff;
-  margin-right: 10px;
-  padding-left: 10px;
+  padding-left: 22px;
 }
 .ingredients_input::placeholder {
   color: white;
@@ -189,4 +183,33 @@ column-gap: 7px;
   color: black;
   line-height: 12px;
  
+}
+
+/* gestion de la liste des tags */
+
+.input-sort{
+  display: flex;
+  margin-top: 30px;
+  width: 1272px;
+  background-color: sandybrown;
+  row-gap: 20px;
+}
+
+.tags-container {
+ 
+  background-color: pink;
+}
+
+#ingredient-tags{
+display: none;
+
+}
+
+.tags-ul{
+
+}
+
+
+.ingredient-tag{
+
 }

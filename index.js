@@ -43,6 +43,7 @@ filteredRecipes.forEach(recipe => {
 
 const ingredientsContainer = document.querySelector("#ingredient-tags");
 const ingredientsList = document.createElement("ul");
+ingredientsList.classList.add("tags-ul");
 ingredientsContainer.appendChild(ingredientsList)
 ingredientsTags.forEach(ingredient => {
     ingredientsList.innerHTML += `<li class="ingredient-tag">${ingredient}</li>`
@@ -114,4 +115,19 @@ document.querySelector(".ingredients_input").addEventListener("input", (e) => {
     });
   }
 });
+
+// Menu hamburger input
+
+let click = false;
+
+document.querySelector(".ingredients_input").addEventListener("click", (e) => {
+  if (!click) {
+  document.querySelector("#ingredient-tags").style.display = "block";
+  click = true;
+  }else{  
+  document.querySelector("#ingredient-tags").style.display = "none";
+  click = false;
+  }
+});
+
 
