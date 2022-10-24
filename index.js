@@ -12,80 +12,110 @@ let filteredRecipes = datas.recipes;
 let ingredientsTags = [];
 let selectedTags = [];
 
+
 // On boucle sur les recettes pour les afficher grâce a la fonction displayRecipe
 
 const searchByTags = () => {
-    filteredRecipes = filteredRecipes.filter((recipe) => {
-        let result = true;
-        selectedTags.forEach(tag => {
-            if (tag.type === "ingredient") {
-                result = result && recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase() === tag.value);
-              }
-              console.log(result);
-
-        //    completer avec les autres types de tags
-        })
-
-        return result;
+  filteredRecipes = filteredRecipes.filter((recipe) => {
+    let result = true;
+    selectedTags.forEach((tag) => {
+      if (tag.type === "ingredient") {
+        result =
+          result &&
+          recipe.ingredients.some(
+            (ingredient) => ingredient.ingredient.toLowerCase() === tag.value
+          );
+      }
+      // console.log(result);
+      
+      //    completer avec les autres types de tags
     });
-    refreshUI();
-}
+    return result;
+  });
+  // Pourquoi quand on ajoute un nouveau tag il duplique puis se triple puis se quadruplique etc...
+  console.log(selectedTags);
+  // createTag()
+  refreshUI();
+};
 
-const updateIngredientsTags = () => { 
-ingredientsTags = [];
-filteredRecipes.forEach(recipe => {
-    recipe.ingredients.forEach(ingredient => {
-        if (!ingredientsTags.includes(ingredient.ingredient.toLowerCase())) {
-            ingredientsTags.push(ingredient.ingredient.toLowerCase());
-        }
-    })
-})
+const updateIngredientsTags = () => {
+  ingredientsTags = [];
+  filteredRecipes.forEach((recipe) => {
+    recipe.ingredients.forEach((ingredient) => {
+      if (!ingredientsTags.includes(ingredient.ingredient.toLowerCase())) {
+        ingredientsTags.push(ingredient.ingredient.toLowerCase());
+      }
+    });
+  });
 
-const ingredientsContainer = document.querySelector("#ingredient-tags");
-const ingredientsList = document.createElement("ul");
-ingredientsList.classList.add("tags-ul");
-ingredientsContainer.appendChild(ingredientsList)
-ingredientsTags.forEach(ingredient => {
-    ingredientsList.innerHTML += `<li class="ingredient-tag">${ingredient}</li>`
-})
-// ingredientsContainer.innerHTML += "</ul>";
-document.querySelectorAll(".ingredient-tag").forEach(tag => {
-    tag.addEventListener("click", () => {
-        if (!selectedTags.includes(tag.innerHTML)) {
+  const ingredientsContainer = document.querySelector("#ingredient-tags");
+  const ingredientsList = document.createElement("ul");
+  ingredientsList.classList.add("tags-ul");
+  ingredientsContainer.appendChild(ingredientsList);
+  ingredientsTags.forEach((ingredient) => {
+    ingredientsList.innerHTML += `<li class="ingredient-tag">${ingredient}</li>`;
+  });
 
-            selectedTags.push({
-                type : "ingredient",
-                value : tag.innerHTML
-            });
-            searchByTags();
-            // console.log(selectedTags);
-            console.log(filteredRecipes);
-        }
-    })
-})
-}
+  document.querySelectorAll(".ingredient-tag").forEach((tag) => {
+    tag.addEventListener("click", (e) => {
+      if (!selectedTags.includes(tag.innerHTML)) {
+        e.preventDefault();
+        selectedTags.push({
+          type: "ingredient",
+          value: tag.innerHTML,
+        });
+        searchByTags();
+      }
+    });
+  });
+};
+
+const createTag = () => {
+  const ingredientLi = document.querySelectorAll(".ingredient-tag");
+  ingredientLi.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      console.log(li);
+      e.preventDefault();
+      const leTag = e.target.innerText;
+      console.log(leTag);
+      const container = document.querySelector("#tags");
+      const p = document.createElement("p");
+      p.innerText = leTag;
+      container.appendChild(p);
+      li.remove();
+    });
+  });
+};
 
 const refreshUI = () => {
   document.querySelector(".recipes-container").innerHTML = "";
-filteredRecipes.map((recipe) => {
+  filteredRecipes.map((recipe) => {
+    displayRecipe(recipe);
+    return;
+  });
+  updateIngredientsTags();
+  // console.log(selectedTags);
 
-  displayRecipe(recipe);
-  return;
-});
-updateIngredientsTags();
+  // ***********************************************************************************
+  // ***********************************************************************************
+  // createTag()
+  // ***********************************************************************************
+  // ***********************************************************************************
 }
-refreshUI() 
 
+refreshUI();
 
-//  main search 
+//  main search
 document.querySelector(".main-search").addEventListener("input", (e) => {
   const str = e.target.value;
   if (str.length >= 3) {
     console.log(str);
-    filteredRecipes = datas.recipes.filter((recipe) => recipe.name.toLowerCase().includes(str.toLowerCase()) );
-    console.log(filteredRecipes)
+    filteredRecipes = datas.recipes.filter((recipe) =>
+      recipe.name.toLowerCase().includes(str.toLowerCase())
+    );
+    console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
-    refreshUI()
+    refreshUI();
   }
 });
 
@@ -95,20 +125,17 @@ document.querySelector(".ingredients_input").addEventListener("input", (e) => {
   const str = e.target.value;
   if (str.length) {
     console.log(str);
-    const filteredRecipes = datas.recipes.filter((recipe) => 
-    {
+    const filteredRecipes = datas.recipes.filter((recipe) => {
+      let correspond = false;
+      recipe.ingredients.forEach((ingredient) => {
+        if (ingredient.ingredient.toLowerCase().includes(str.toLowerCase())) {
+          correspond = true;
+        }
+      });
+      return correspond;
+    });
 
-        let correspond = false;
-        recipe.ingredients.forEach(ingredient => {
-            if (ingredient.ingredient.toLowerCase().includes(str.toLowerCase())) {
-                correspond = true;
-            }
-        });
-    return correspond;    
-    
-    } );
-
-    console.log(filteredRecipes)
+    console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
     filteredRecipes.map((recipe) => {
       displayRecipe(recipe);
@@ -120,18 +147,15 @@ document.querySelector(".ingredients_input").addEventListener("input", (e) => {
 
 let click = false;
 
-const inputContainer = document.querySelector(".ingredients_input")
+const inputContainer = document.querySelector(".ingredients_input");
 inputContainer.addEventListener("click", (e) => {
   if (!click) {
-  document.querySelector("#ingredient-tags").style.display = "block";
- inputContainer.style.width = "100%";
-  click = true;
-  }else{  
-  document.querySelector("#ingredient-tags").style.display = "none";
-  inputContainer.style.width = "170px";
-  click = false;
-
+    document.querySelector("#ingredient-tags").style.display = "block";
+    inputContainer.style.width = "100%";
+    click = true;
+  } else {
+    document.querySelector("#ingredient-tags").style.display = "none";
+    inputContainer.style.width = "170px";
+    click = false;
   }
 });
-
-
