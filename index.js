@@ -10,8 +10,9 @@ datas.recipes = recipes;
 
 let filteredRecipes = datas.recipes;
 let ingredientsTags = [];
+let appliancesTags = [];
+let ustensilsTags = [];
 let selectedTags = [];
-
 
 //  main search
 document.querySelector(".main-search").addEventListener("input", (e) => {
@@ -27,23 +28,21 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
   }
 });
 
-
 // Recherche par ingrédient via l'input de saisie
 document.querySelector(".ingredients_input").addEventListener("input", (e) => {
   const str = e.target.value;
+  updateIngredientsTags();
+  
+});
+
+document.querySelector('.appliance_input').addEventListener('input', (e) => {
+  const str = e.target.value;
   if (str.length) {
-    console.log(str);
     const filteredRecipes = datas.recipes.filter((recipe) => {
       let correspond = false;
-      recipe.ingredients.forEach((ingredient) => {
-        if (ingredient.ingredient.toLowerCase().includes(str.toLowerCase())) {
-          correspond = true;
-        }
-      });
+      recipe.appliance.toLowerCase().includes(str.toLowerCase()) ? correspond = true : correspond = false;
       return correspond;
     });
-
-    console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
     filteredRecipes.map((recipe) => {
       displayRecipe(recipe);
@@ -52,42 +51,76 @@ document.querySelector(".ingredients_input").addEventListener("input", (e) => {
 });
 
 
+document.querySelector('.ustensils_input').addEventListener('input', (e) => {
+  const str = e.target.value;
+  if (str.length) {
+    const filteredRecipes = datas.recipes.filter((recipe) => {
+      let correspond = false;
+      recipe.ustensils.forEach((ustensil) => {
+        ustensil.toLowerCase().includes(str.toLowerCase()) ? correspond = true : correspond = false;
+      });
+      return correspond;
+    });
+    document.querySelector(".recipes-container").innerHTML = "";
+    filteredRecipes.map((recipe) => {
+      displayRecipe(recipe);
+    });
+  }
+});
+
+
+
 //  On actualise les recettes en fonction des tags sélectionnés
 const searchByTags = () => {
   filteredRecipes = filteredRecipes.filter((recipe) => {
     let result = true;
     selectedTags.forEach((tag) => {
       if (tag.type === "ingredient") {
-        result = result && recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase() === tag.value);
-        console.log('CONSOLE LOG DE RESULT', result);
+        result =
+          result &&
+          recipe.ingredients.some(
+            (ingredient) => ingredient.ingredient.toLowerCase() === tag.value
+          );
+        console.log("CONSOLE LOG DE RESULT", result);
+      } else if (tag.type === "appliance") {
+        result = result && recipe.appliance.toLowerCase() === tag.value;
+      } else if (tag.type === "ustensil") {
+        result = result && recipe.ustensils.includes(tag.value);
       }
+      
       //    completer avec les autres types de tags
     });
     return result;
   });
-  console.log( "CONSOLE LOG DE FILTERED RECIPES ",filteredRecipes);
-  // Pourquoi quand on ajoute un nouveau tag il duplique puis se triple puis se quadruplique etc...
+
+  console.log("CONSOLE LOG DE FILTERED RECIPES ", filteredRecipes);
   console.log("CONSOLE.LOG DE SELECTED TAGS", selectedTags);
-  
+
   refreshUI();
 };
-
-
 
 // mise à jour du tableau "ingredientTags"
 const updateIngredientsTags = () => {
   // on crée un tableau qui va contenir la liste des ingrédients des recettes ( filtrées ou non )
   ingredientsTags = [];
-  // pour chaque recette  
+  const inputContainer = document.querySelector(".ingredients_input");
+  let searchKey = inputContainer.value;
+  // pour chaque recette
   filteredRecipes.forEach((recipe) => {
     // on boucle sur les ingrédients de la recette
     recipe.ingredients.forEach((ingredient) => {
       // on vérifie si l'ingrédient n'est pas déjà dans le tableau
       if (!ingredientsTags.includes(ingredient.ingredient.toLowerCase())) {
         // si il n'est pas dans le tableau on l'ajoute
-        ingredientsTags.push(ingredient.ingredient.toLowerCase());
+          if (ingredient.ingredient.toLowerCase().includes(searchKey.toLowerCase())){
+            ingredientsTags.push(ingredient.ingredient.toLowerCase());
+          }
       }
     });
+  });
+
+  ingredientsTags = ingredientsTags.filter((ingredient) => {
+    return !selectedTags.some((tag) => tag.value === ingredient);
   });
 
   // on récupère le container qui va contenir l'ul
@@ -100,7 +133,6 @@ const updateIngredientsTags = () => {
   if (ul) {
     ul.remove();
   }
-
 
   ingredientsContainer.appendChild(ingredientsList);
   ingredientsTags.forEach((ingredient) => {
@@ -119,17 +151,110 @@ const updateIngredientsTags = () => {
           value: tag.innerHTML,
         });
         searchByTags();
-        
       }
     });
   });
-};
+  createTag();
 
-// création du tag au desssu des filtres 
+  console.log(ingredientsTags);
+};
+const updateAppliancesTags = () => {
+  appliancesTags = [];
+  filteredRecipes.forEach((recipe) => {
+    if (!appliancesTags.includes(recipe.appliance.toLowerCase())) {
+      appliancesTags.push(recipe.appliance.toLowerCase());
+    }
+  });
+
+  appliancesTags = appliancesTags.filter((appliance) => {
+    return !selectedTags.some((tag) => tag.value === appliance);
+  });
+
+  const appliancesContainer = document.querySelector("#appliance-tags");
+  const appliancesList = document.createElement("ul");
+
+  appliancesList.classList.add("tags-ul-appliance");
+
+  const ul = appliancesContainer.querySelector(".tags-ul-appliance");
+  if (ul) {
+    ul.remove();
+  }
+
+  appliancesContainer.appendChild(appliancesList);  
+  appliancesTags.forEach((appliance) => {
+    appliancesList.innerHTML += `<li class="appliance-tag">${appliance}</li>`;
+  });
+
+  document.querySelectorAll(".appliance-tag").forEach((tag) => {
+    tag.addEventListener("click", (e) => {
+      if (!selectedTags.includes(tag.innerHTML)) {
+        e.preventDefault();
+        selectedTags.push({
+          type: "appliance",
+          value: tag.innerHTML,
+        });
+
+        searchByTags();
+      }
+    });
+  });
+  // createTag();
+
+  console.log(appliancesTags);
+};
+const updateUstensilsTags = () => {
+  ustensilsTags = [];
+  filteredRecipes.forEach((recipe) => {
+    recipe.ustensils.forEach((ustensil) => {
+      if (!ustensilsTags.includes(ustensil.toLowerCase())) {
+        ustensilsTags.push(ustensil.toLowerCase());
+      }
+    });
+  });
+
+  ustensilsTags = ustensilsTags.filter((ustensil) => {
+    return !selectedTags.some((tag) => tag.value === ustensil);
+  });
+
+  const ustensilsContainer = document.querySelector("#ustensil-tags");
+  const ustensilsList = document.createElement("ul");
+  ustensilsList.classList.add("tags-ul-ustensil");
+
+  const ul = ustensilsContainer.querySelector(".tags-ul-unstensil");
+  if (ul) {
+    ul.remove();
+  }
+
+  ustensilsContainer.appendChild(ustensilsList);
+  ustensilsTags.forEach((ustensil) => {
+    ustensilsList.innerHTML += `<li class="ustensil-tag">${ustensil}</li>`;
+  });
+
+  document.querySelectorAll(".ustensil-tag").forEach((tag) => {
+    tag.addEventListener("click", (e) => {
+      if (!selectedTags.includes(tag.innerHTML)) {
+        e.preventDefault();
+        selectedTags.push({
+          type: "ustensil",
+          value: tag.innerHTML,
+        });
+
+        searchByTags();
+      }
+    });
+  });
+  // createTag();
+
+  console.log(ustensilsTags);
+}
+
+
+// création du tag au desssu des filtres
 const createTag = () => {
-  // on récupère la liste de tous les ingrédients dans la liste 
+  // on récupère la liste de tous les ingrédients dans la liste
   const ingredientLi = document.querySelectorAll(".ingredient-tag");
   // on boucle sur la liste des ingrédients
+
   ingredientLi.forEach((li) => {
     // on ajoute un event listener au click
     li.addEventListener("click", (e) => {
@@ -140,7 +265,10 @@ const createTag = () => {
       // On récupère le container qui va contenir les tags
       const container = document.querySelector("#tags");
       // on crée un par qui va contenir le nom de l'ingrédient sélectionné
+
       const p = document.createElement("p");
+      p.classList.add("tag");
+
       // on ajoute le nom de l'ingrédient dans le paragraphe
       p.innerText = leTag;
       // on ajoute le paragraphe dans le container
@@ -159,15 +287,15 @@ const refreshUI = () => {
     return;
   });
   updateIngredientsTags();
+  updateAppliancesTags();
+  updateUstensilsTags();
   // console.log(selectedTags);
   // ***********************************************************************************
-  createTag()
-  // ***********************************************************************************
 
-}
+  // ***********************************************************************************
+};
 
 refreshUI();
-
 
 // Ouverture et fermeture du menu filtre
 
@@ -177,11 +305,43 @@ const inputContainer = document.querySelector(".ingredients_input");
 inputContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#ingredient-tags").style.display = "block";
+    inputContainer.style.borderRadius = "5px 5px 0 0";
     inputContainer.style.width = "100%";
     click = true;
   } else {
     document.querySelector("#ingredient-tags").style.display = "none";
+    inputContainer.style.borderRadius = "5px";
     inputContainer.style.width = "170px";
     click = false;
   }
 });
+
+
+const inputApplianceContainer = document.querySelector(".appliance_input");
+inputApplianceContainer.addEventListener("click", (e) => {
+  if (!click) {
+    document.querySelector("#appliance-tags").style.display = "block";
+    inputApplianceContainer.style.width = "100%";
+    click = true;
+  } else {
+    document.querySelector("#appliance-tags").style.display = "none";
+    inputApplianceContainer.style.width = "170px";
+    click = false;
+  }
+});
+
+
+const inputUstensilContainer = document.querySelector(".ustensils_input");
+inputUstensilContainer.addEventListener("click", (e) => {
+  if (!click) {
+    document.querySelector("#ustensil-tags").style.display = "block";
+    inputUstensilContainer.style.width = "100%";
+    click = true;
+  } else {
+    document.querySelector("#ustensil-tags").style.display = "none";
+    inputUstensilContainer.style.width = "170px";
+    click = false;
+  }
+});
+
+//--------------------------------------------------------------
