@@ -154,7 +154,7 @@ const updateIngredientsTags = () => {
       }
     });
   });
-  createTag();
+  createBlueTag();
 
   console.log(ingredientsTags);
 };
@@ -205,7 +205,7 @@ const updateAppliancesTags = () => {
     });
   });
 
-  // createTag();
+  createGreenTag();
 }
 
 const updateUstensilsTags = () => {
@@ -255,15 +255,15 @@ const updateUstensilsTags = () => {
     });
   });
 
-  // createTag();
+  createRedTag();
 }
 
 // création du tag au desssu des filtres
-const createTag = () => {
+const createBlueTag = () => {
   // on récupère la liste de tous les ingrédients dans la liste
   const ingredientLi = document.querySelectorAll(".ingredient-tag");
   // on boucle sur la liste des ingrédients
-
+  
   ingredientLi.forEach((li) => {
     // on ajoute un event listener au click
     li.addEventListener("click", (e) => {
@@ -277,7 +277,7 @@ const createTag = () => {
 
       const p = document.createElement("p");
       p.classList.add("tag");
-
+      p.classList.add("blueTag");
       // on ajoute le nom de l'ingrédient dans le paragraphe
       p.innerText = leTag;
       // on ajoute le paragraphe dans le container
@@ -287,6 +287,43 @@ const createTag = () => {
     });
   });
 };
+
+const createGreenTag = () => {
+  const applianceLi = document.querySelectorAll(".appliance-tag");
+  applianceLi.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      e.preventDefault();
+      const leTag = e.target.innerText;
+      console.log(leTag);
+      const container = document.querySelector("#tags");
+      const p = document.createElement("p");
+      p.classList.add("tag");
+      p.classList.add("greenTag");
+      p.innerText = leTag;
+      container.appendChild(p);
+      li.remove();
+    });
+  });
+};
+
+const createRedTag = () => {
+  const ustensilLi = document.querySelectorAll(".ustensil-tag");
+  ustensilLi.forEach((li) => {
+    li.addEventListener("click", (e) => {
+      e.preventDefault();
+      const leTag = e.target.innerText;
+      console.log(leTag);
+      const container = document.querySelector("#tags");
+      const p = document.createElement("p");
+      p.classList.add("tag");
+      p.classList.add("redTag");
+      p.innerText = leTag;
+      container.appendChild(p);
+      li.remove();
+    });
+  });
+};
+
 
 // rafrachissement de l'interface utilisateur
 const refreshUI = () => {
