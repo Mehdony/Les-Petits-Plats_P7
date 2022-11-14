@@ -158,11 +158,18 @@ const updateIngredientsTags = () => {
 
   console.log(ingredientsTags);
 };
+
+
 const updateAppliancesTags = () => {
-  appliancesTags = [];
+  appliancesTags = []
+  const inputContainer = document.querySelector('.appliance_input');
+  let searchKey = inputContainer.value;
+
   filteredRecipes.forEach((recipe) => {
     if (!appliancesTags.includes(recipe.appliance.toLowerCase())) {
-      appliancesTags.push(recipe.appliance.toLowerCase());
+      if (recipe.appliance.toLowerCase().includes(searchKey.toLowerCase())){
+        appliancesTags.push(recipe.appliance.toLowerCase());
+      }
     }
   });
 
@@ -170,44 +177,48 @@ const updateAppliancesTags = () => {
     return !selectedTags.some((tag) => tag.value === appliance);
   });
 
-  const appliancesContainer = document.querySelector("#appliance-tags");
-  const appliancesList = document.createElement("ul");
+  const appliancesContainer = document.querySelector('#appliance-tags');
+  const appliancesList = document.createElement('ul');
+  appliancesList.classList.add('tags-ul');
 
-  appliancesList.classList.add("tags-ul-appliance");
-
-  const ul = appliancesContainer.querySelector(".tags-ul-appliance");
+  const ul = appliancesContainer.querySelector('.tags-ul');
   if (ul) {
     ul.remove();
   }
 
-  appliancesContainer.appendChild(appliancesList);  
+  appliancesContainer.appendChild(appliancesList);
   appliancesTags.forEach((appliance) => {
     appliancesList.innerHTML += `<li class="appliance-tag">${appliance}</li>`;
-  });
+  }
+  );
 
-  document.querySelectorAll(".appliance-tag").forEach((tag) => {
-    tag.addEventListener("click", (e) => {
+  document.querySelectorAll('.appliance-tag').forEach((tag) => {
+    tag.addEventListener('click', (e) => {
       if (!selectedTags.includes(tag.innerHTML)) {
         e.preventDefault();
         selectedTags.push({
-          type: "appliance",
+          type: 'appliance',
           value: tag.innerHTML,
         });
-
         searchByTags();
       }
     });
   });
-  // createTag();
 
-  console.log(appliancesTags);
-};
+  // createTag();
+}
+
 const updateUstensilsTags = () => {
-  ustensilsTags = [];
+  ustensilsTags = []
+  const inputContainer = document.querySelector('.ustensils_input');
+  let searchKey = inputContainer.value;
+
   filteredRecipes.forEach((recipe) => {
     recipe.ustensils.forEach((ustensil) => {
       if (!ustensilsTags.includes(ustensil.toLowerCase())) {
-        ustensilsTags.push(ustensil.toLowerCase());
+        if (ustensil.toLowerCase().includes(searchKey.toLowerCase())){
+          ustensilsTags.push(ustensil.toLowerCase());
+        }
       }
     });
   });
@@ -216,11 +227,11 @@ const updateUstensilsTags = () => {
     return !selectedTags.some((tag) => tag.value === ustensil);
   });
 
-  const ustensilsContainer = document.querySelector("#ustensil-tags");
-  const ustensilsList = document.createElement("ul");
-  ustensilsList.classList.add("tags-ul-ustensil");
+  const ustensilsContainer = document.querySelector('#ustensil-tags');
+  const ustensilsList = document.createElement('ul');
+  ustensilsList.classList.add('tags-ul');
 
-  const ul = ustensilsContainer.querySelector(".tags-ul-unstensil");
+  const ul = ustensilsContainer.querySelector('.tags-ul');
   if (ul) {
     ul.remove();
   }
@@ -228,26 +239,24 @@ const updateUstensilsTags = () => {
   ustensilsContainer.appendChild(ustensilsList);
   ustensilsTags.forEach((ustensil) => {
     ustensilsList.innerHTML += `<li class="ustensil-tag">${ustensil}</li>`;
-  });
+  }
+  );
 
-  document.querySelectorAll(".ustensil-tag").forEach((tag) => {
-    tag.addEventListener("click", (e) => {
+  document.querySelectorAll('.ustensil-tag').forEach((tag) => { 
+    tag.addEventListener('click', (e) => {
       if (!selectedTags.includes(tag.innerHTML)) {
         e.preventDefault();
         selectedTags.push({
-          type: "ustensil",
+          type: 'ustensil',
           value: tag.innerHTML,
         });
-
         searchByTags();
       }
     });
   });
+
   // createTag();
-
-  console.log(ustensilsTags);
 }
-
 
 // création du tag au desssu des filtres
 const createTag = () => {
