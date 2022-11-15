@@ -180,9 +180,9 @@ const updateAppliancesTags = () => {
 
   const appliancesContainer = document.querySelector("#appliance-tags");
   const appliancesList = document.createElement("ul");
-  appliancesList.classList.add("tags-ul");
+  appliancesList.classList.add("tags-ul-appliance");
 
-  const ul = appliancesContainer.querySelector(".tags-ul");
+  const ul = appliancesContainer.querySelector(".tags-ul-appliance");
   if (ul) {
     ul.remove();
   }
@@ -229,9 +229,9 @@ const updateUstensilsTags = () => {
 
   const ustensilsContainer = document.querySelector("#ustensil-tags");
   const ustensilsList = document.createElement("ul");
-  ustensilsList.classList.add("tags-ul");
+  ustensilsList.classList.add("tags-ul-ustensil");
 
-  const ul = ustensilsContainer.querySelector(".tags-ul");
+  const ul = ustensilsContainer.querySelector(".tags-ul-ustensil");
   if (ul) {
     ul.remove();
   }
@@ -281,6 +281,7 @@ const createBlueTag = () => {
       p.innerText = leTag;
       // on ajoute le paragraphe dans le container
       container.appendChild(p);
+      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon'>`;
       // on retire le tag de la liste des tags
       li.remove();
       p.addEventListener("click", (e) => {
@@ -294,14 +295,29 @@ const createBlueTag = () => {
 
 function deleteTag(e) {
   console.log(e.target);
-  e.target.remove();
+  e.currentTarget.remove();
   updateIngredientsTags();
   selectedTags = selectedTags.filter((tag) => {
     return tag.value !== e.target.innerText;
   }
   );
   searchByTags();
+  console.log(selectedTags);
+
+  console.log(filteredRecipes)
+
+  if (selectedTags.length === 0) {
+    filteredRecipes = recipes;
+  }
+  
+  console.log(filteredRecipes);
+  refreshUI()
+
+ 
 }
+
+
+
 
 const createGreenTag = () => {
   const applianceLi = document.querySelectorAll(".appliance-tag");
@@ -316,7 +332,13 @@ const createGreenTag = () => {
       p.classList.add("greenTag");
       p.innerText = leTag;
       container.appendChild(p);
+      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon'>`;
+
       li.remove();
+      p.addEventListener("click", (e) => {
+        deleteTag(e);
+
+      });
     });
   });
 };
@@ -334,7 +356,13 @@ const createRedTag = () => {
       p.classList.add("redTag");
       p.innerText = leTag;
       container.appendChild(p);
+      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon'>`;
+
       li.remove();
+      p.addEventListener("click", (e) => {
+        deleteTag(e);
+
+      });
     });
   });
 };
@@ -380,10 +408,12 @@ const inputApplianceContainer = document.querySelector(".appliance_input");
 inputApplianceContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#appliance-tags").style.display = "block";
+    inputApplianceContainer.style.borderRadius = "5px 5px 0 0";
     inputApplianceContainer.style.width = "100%";
     click = true;
   } else {
     document.querySelector("#appliance-tags").style.display = "none";
+    inputApplianceContainer.style.borderRadius = "5px";
     inputApplianceContainer.style.width = "170px";
     click = false;
   }
@@ -393,10 +423,12 @@ const inputUstensilContainer = document.querySelector(".ustensils_input");
 inputUstensilContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#ustensil-tags").style.display = "block";
+    inputUstensilContainer.style.borderRadius = "5px 5px 0 0";
     inputUstensilContainer.style.width = "100%";
     click = true;
   } else {
     document.querySelector("#ustensil-tags").style.display = "none";
+    inputUstensilContainer.style.borderRadius = "5px";
     inputUstensilContainer.style.width = "170px";
     click = false;
   }

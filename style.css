@@ -1,4 +1,4 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -10,18 +10,16 @@ body {
   flex-direction: column;
   align-items: center;
   font-family: "DM sans", sans-serif;
-
-  
 }
 
-header{
-display: flex;
-flex-direction: column;
-align-items: center;
-}   
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .logo {
-  width: 50.48px    ;
+  width: 50.48px;
   height: 46.29px;
   display: flex;
   justify-content: center;
@@ -35,8 +33,7 @@ align-items: center;
   font-weight: 700;
   font-size: 36px;
   line-height: 47px;
-   margin: 0;
-
+  margin: 0;
 
   text-align: center;
 
@@ -51,9 +48,8 @@ align-items: center;
   background-color: #e7e7e7;
   border: none;
   padding-left: 30px;
- font-size: 18px;
- border-radius: 5px;
- 
+  font-size: 18px;
+  border-radius: 5px;
 }
 
 .main-search:focus {
@@ -62,33 +58,34 @@ align-items: center;
 
 /* input search */
 
-.ingredients_input{
+.ingredients_input {
   width: 170px;
   height: 69px;
   border-radius: 5px;
-  background-color: #3282F7;
+  background-color: #3282f7;
   border: none;
   font-size: 18px;
   color: #fff;
   padding-left: 22px;
- 
-  
+  outline: none;
 }
-.appliance_input{
+.appliance_input {
   width: 170px;
   height: 69px;
   border-radius: 5px;
-  background-color: #68D9A4;
+  background-color: #68d9a4;
   border: none;
   font-size: 18px;
   color: #fff;
   padding-left: 22px;
+  outline: none;
 }
-.ustensils_input{
+.ustensils_input {
+  outline: none;
   width: 170px;
   height: 69px;
   border-radius: 5px;
-  background-color: #ED6454;
+  background-color: #ed6454;
   border: none;
   font-size: 18px;
   color: #fff;
@@ -108,11 +105,11 @@ align-items: center;
   opacity: 1;
 }
 
-.device_input{
+.device_input {
   width: 170px;
   height: 69px;
   border-radius: 5px;
-  background-color: #68D9A4;
+  background-color: #68d9a4;
   border: none;
   color: #fff;
   margin-right: 10px;
@@ -124,11 +121,11 @@ align-items: center;
   opacity: 1;
 }
 
-.ustensiles_input{
+.ustensiles_input {
   width: 170px;
   height: 69px;
   border-radius: 5px;
-  background-color: #ED6454;
+  background-color: #ed6454;
   border: none;
   color: #fff;
   margin-right: 10px;
@@ -140,10 +137,9 @@ align-items: center;
   opacity: 1;
 }
 
-
 /* cards */
 
-.recipes-container{
+.recipes-container {
   display: flex;
   flex-wrap: wrap;
   margin: 0;
@@ -152,86 +148,111 @@ align-items: center;
   row-gap: 30px;
 }
 
-.card{
-    width: 380px;
-    height: 364px;
-    border-radius: 5px;
-    bottom: -21.33%;
-    background: #E7E7E7;
-    border-radius: 5px;
-    margin-top: 30px;
+.card {
+  width: 380px;
+  height: 364px;
+  border-radius: 5px;
+  bottom: -21.33%;
+  background: #e7e7e7;
+  border-radius: 5px;
+  margin-top: 30px;
 }
 
-img{
-    width: 380px;
-    height: 200px;
-    border-radius: 5px 0;
-    background-color: #C7BEBE;  
+img {
+  width: 380px;
+  height: 200px;
+  border-radius: 5px 0;
+  background-color: #c7bebe;
 }
 
-h2{
-  margin:0;
+h2 {
+  margin: 0;
   font-size: 18px;
+  /* width: 200px; */
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 225px;
+  overflow: hidden;
 }
 
-.time-container{
-display: flex;
-align-items: center;
-column-gap: 7px;
+.time-container {
+  display: flex;
+  align-items: center;
+  column-gap: 7px;
 }
 
 .time {
   width: 20px;
   height: 20px;
-  background-color: #E7E7E7;
- 
+  background-color: #e7e7e7;
 }
 
-.title-time{
-  display:flex;
+.title-time {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
   height: 50px;
 }
-.duration{
+.duration {
   font-size: 18px;
   margin-left: 10px;
   font-weight: bold;
-   margin: 0;
+  margin: 0;
 }
-.info{
+.info {
   display: flex;
   flex-direction: row;
-  align-items: center ;
+  /* align-items: center ; */
   margin-top: 0;
   column-gap: 50px;
-  overflow: hidden ; 
-  white-space: nowrap; 
+  overflow: hidden;
+  /* white-space: nowrap;  */
   text-overflow: ellipsis;
 }
 
-.ingredients{
-  width: 30%;
+.ingredients {
+  width: 35%;
   margin-left: 20px;
   font-size: 12px;
   color: black;
-  line-height :14.4px;
+  height: 100px;
+  line-height: 14px;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.description{
+.description {
   width: 40%;
   margin-left: 20px;
   font-size: 12px;
   color: black;
   line-height: 12px;
- /* overflow: nowrap;
+
+  font-family: "Lato", sans-serif;
+  font-size: 12px;
+  line-height: 14px;
+  margin: 0;
+  height: 98px;
+
+  display: flex;
+  flex-direction: column;
+  /* ellipsis optimized text bloc */
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  /* overflow: nowrap;
   text-overflow: ellipsis; */
 }
 
 /* gestion de la liste des tags */
 
-.input-sort{
+.input-sort {
   display: flex;
   margin-top: 15px;
   width: 1240px;
@@ -239,27 +260,32 @@ column-gap: 7px;
 }
 
 .tags-container {
- overflow-x: hidden;
-
+  overflow-x: hidden;
 }
 
-#ingredient-tags{
+.closeIcon {
+  width: 20px;
+  height: 20px;
+  background: none;
+  margin-left: 10px;
+}
+
+#ingredient-tags {
   display: none;
-  background-color: #3282F7;
+  background-color: #3282f7;
   max-height: 300px;
-  
 }
 
 #appliance-tags {
   display: none;
-  background-color: #68D9A4;
+  background-color: #68d9a4;
   max-height: 300px;
   padding: 10px;
 }
 
-#ustensil-tags{
+#ustensil-tags {
   display: none;
-  background-color: #ED6454;
+  background-color: #ed6454;
   max-height: 300px;
   padding: 10px;
 }
@@ -270,7 +296,7 @@ column-gap: 7px;
   column-gap: 20px;
 }
 
-.tag{
+.tag {
   /* display: block; */
   height: 37px;
   color: white;
@@ -286,44 +312,41 @@ column-gap: 7px;
 }
 
 .blueTag {
-  background-color: #3282F7;
+  background-color: #3282f7;
 }
 
 .greenTag {
-  background-color: #68D9A4;
+  background-color: #68d9a4;
 }
 
 .redTag {
-  background-color: #ED6454;
+  background-color: #ed6454;
 }
 
-
-.tags-ul{
-columns: 3;
-overflow: auto;
-background-color: #3282F7;
-color: white;
-padding: 10px;
+.tags-ul {
+  columns: 3;
+  overflow: auto;
+  background-color: #3282f7;
+  color: white;
+  padding: 10px;
 }
 
-.tags-ul-appliance{
-columns: 3;
-overflow: auto;
-background-color: #68D9A4;
-color: white;
+.tags-ul-appliance {
+  columns: 3;
+  overflow: auto;
+  background-color: #68d9a4;
+  color: white;
 }
 
-.tags-ul-ustensil{
-columns: 3;
-overflow: auto;
-background-color: #ED6454;
-color: white;
+.tags-ul-ustensil {
+  columns: 3;
+  overflow: auto;
+  background-color: #ed6454;
+  color: white;
 }
 
-
-.ingredient-tag{
-list-style: none;
-width: 150px;
-break-inside: avoid;
+.ingredient-tag {
+  list-style: none;
+  width: 150px;
+  break-inside: avoid;
 }
- 
