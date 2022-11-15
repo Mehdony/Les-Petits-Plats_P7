@@ -31,6 +31,7 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
 // Recherche par ingrédient via l'input de saisie
 document.querySelector(".ingredients_input").addEventListener("input", (e) => {
   const str = e.target.value;
+  
   updateIngredientsTags();
 });
 
