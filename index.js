@@ -42,24 +42,6 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
   }
 });
 
-// TEST FOR LOOP
-// document.querySelector('.main-search').addEventListener('input', (e) => {
-//   const str = e.target.value;
-//   mainStr = str;
-//   if (str.length >= 3) {
-//     console.log(str);
-//     // use for loop
-//     for (let i = 0; i < datas.recipes.length; i++) {
-//       if (datas.recipes[i].name.toLowerCase().includes(str.toLowerCase())) {
-//         filteredRecipes.push(datas.recipes[i]);
-//       }
-//     }
-//     mainSearch = true;
-//     console.log(filteredRecipes);
-//     document.querySelector('.recipes-container').innerHTML = '';
-//     refreshUI();
-//   }
-// });
 
 // Recherche par ingrédient via l'input de saisie
 document.querySelector(".ingredients_input").addEventListener("input", (e) => {
