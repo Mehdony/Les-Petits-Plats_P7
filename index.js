@@ -22,15 +22,44 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
   mainStr = str;
   if (str.length >= 3) {
     console.log(str);
-    filteredRecipes = datas.recipes.filter((recipe) =>
-      recipe.name.toLowerCase().includes(str.toLowerCase())
+    filteredRecipes = datas.recipes.filter(
+      (recipe) =>
+        recipe.name.toLowerCase().includes(str.toLowerCase()) ||
+        recipe.ingredients.some((ingredient) =>
+          ingredient.ingredient.toLowerCase().includes(str.toLowerCase())
+        ) ||
+        recipe.description.toLowerCase().includes(str.toLowerCase())
     );
     mainSearch = true;
     console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
     refreshUI();
+    if (str.length <= 3 ) {
+      mainSearch = false;
+      filteredRecipes = datas.recipes;
+      refreshUI();
+    }
   }
 });
+
+// TEST FOR LOOP
+// document.querySelector('.main-search').addEventListener('input', (e) => {
+//   const str = e.target.value;
+//   mainStr = str;
+//   if (str.length >= 3) {
+//     console.log(str);
+//     // use for loop
+//     for (let i = 0; i < datas.recipes.length; i++) {
+//       if (datas.recipes[i].name.toLowerCase().includes(str.toLowerCase())) {
+//         filteredRecipes.push(datas.recipes[i]);
+//       }
+//     }
+//     mainSearch = true;
+//     console.log(filteredRecipes);
+//     document.querySelector('.recipes-container').innerHTML = '';
+//     refreshUI();
+//   }
+// });
 
 // Recherche par ingrédient via l'input de saisie
 document.querySelector(".ingredients_input").addEventListener("input", (e) => {
