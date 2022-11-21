@@ -13,15 +13,20 @@ let ingredientsTags = [];
 let appliancesTags = [];
 let ustensilsTags = [];
 let selectedTags = [];
+let mainStr = ''
+let mainSearch = false
+
 
 //  main search
 document.querySelector(".main-search").addEventListener("input", (e) => {
   const str = e.target.value;
+  mainStr = str;
   if (str.length >= 3) {
     console.log(str);
     filteredRecipes = datas.recipes.filter((recipe) =>
       recipe.name.toLowerCase().includes(str.toLowerCase())
     );
+    mainSearch = true;
     console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
     refreshUI();
@@ -31,7 +36,7 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
 // Recherche par ingrédient via l'input de saisie
 document.querySelector(".ingredients_input").addEventListener("input", (e) => {
   const str = e.target.value;
-  
+
   updateIngredientsTags();
 });
 
@@ -282,11 +287,21 @@ const createBlueTag = () => {
       p.innerText = leTag;
       // on ajoute le paragraphe dans le container
       container.appendChild(p);
-      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon'>`;
+      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon' data-tag='${leTag}'>`;
+      p.setAttribute("data-tag", leTag);
       // on retire le tag de la liste des tags
       li.remove();
       p.addEventListener("click", (e) => {
         deleteTag(e);
+     
+        
+      if (mainSearch) {
+        filteredRecipes = recipes.filter((recipe) => {
+          return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
+        });
+        searchByTags();
+      } 
+      
 
       });
     });
@@ -299,26 +314,20 @@ function deleteTag(e) {
   e.currentTarget.remove();
   updateIngredientsTags();
   selectedTags = selectedTags.filter((tag) => {
-    return tag.value !== e.target.innerText;
-  }
-  );
+    return tag.value !== e.target.getAttribute("data-tag");
+  });
   searchByTags();
   console.log(selectedTags);
 
-  console.log(filteredRecipes)
+  console.log(filteredRecipes);
 
   if (selectedTags.length === 0) {
     filteredRecipes = recipes;
   }
-  
+
   console.log(filteredRecipes);
-  refreshUI()
-
- 
+  refreshUI();
 }
-
-
-
 
 const createGreenTag = () => {
   const applianceLi = document.querySelectorAll(".appliance-tag");
@@ -338,7 +347,6 @@ const createGreenTag = () => {
       li.remove();
       p.addEventListener("click", (e) => {
         deleteTag(e);
-
       });
     });
   });
@@ -362,7 +370,6 @@ const createRedTag = () => {
       li.remove();
       p.addEventListener("click", (e) => {
         deleteTag(e);
-
       });
     });
   });
