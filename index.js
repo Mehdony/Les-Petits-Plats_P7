@@ -13,9 +13,8 @@ let ingredientsTags = [];
 let appliancesTags = [];
 let ustensilsTags = [];
 let selectedTags = [];
-let mainStr = ''
-let mainSearch = false
-
+let mainStr = "";
+let mainSearch = false;
 
 //  main search
 document.querySelector(".main-search").addEventListener("input", (e) => {
@@ -293,16 +292,12 @@ const createBlueTag = () => {
       li.remove();
       p.addEventListener("click", (e) => {
         deleteTag(e);
-     
-        
-      if (mainSearch) {
-        filteredRecipes = recipes.filter((recipe) => {
-          return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
-        });
-        searchByTags();
-      } 
-      
-
+        if (mainSearch) {
+          filteredRecipes = recipes.filter((recipe) => {
+            return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
+          });
+          searchByTags();
+        }
       });
     });
   });
@@ -342,11 +337,17 @@ const createGreenTag = () => {
       p.classList.add("greenTag");
       p.innerText = leTag;
       container.appendChild(p);
-      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon'>`;
-
+      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon' data-tag='${leTag}'>`;
+      p.setAttribute("data-tag", leTag);
       li.remove();
       p.addEventListener("click", (e) => {
         deleteTag(e);
+        if (mainSearch) {
+          filteredRecipes = recipes.filter((recipe) => {
+            return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
+          });
+          searchByTags();
+        }
       });
     });
   });
@@ -365,11 +366,17 @@ const createRedTag = () => {
       p.classList.add("redTag");
       p.innerText = leTag;
       container.appendChild(p);
-      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon'>`;
-
+      p.innerHTML += `<img src='images/closeIc.svg' class='closeIcon' data-tag='${leTag}'>`;
+      p.setAttribute("data-tag", leTag);
       li.remove();
       p.addEventListener("click", (e) => {
         deleteTag(e);
+        if (mainSearch) {
+          filteredRecipes = recipes.filter((recipe) => {
+            return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
+          });
+          searchByTags();
+        }
       });
     });
   });
