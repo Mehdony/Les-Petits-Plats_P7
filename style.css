@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   list-style: none;
+  
 }
 
 body {
@@ -16,6 +17,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 }
 
 .logo {
@@ -25,7 +27,9 @@ header {
   justify-content: center;
   align-items: center;
   background-color: #fff;
+  margin-top: 42px;
 }
+
 
 .title {
   font-family: "DM Sans";
@@ -35,6 +39,7 @@ header {
   line-height: 47px;
   margin: 0;
 
+  margin-bottom: 17px;
   text-align: center;
 
   color: #d04f4f;
@@ -387,4 +392,19 @@ h2 {
   list-style: none;
   width: 150px;
   break-inside: avoid;
+}
+
+
+.no-result {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.no-result p {
+  font-size: 18px;
+  color: #2b2a2a;
 }
