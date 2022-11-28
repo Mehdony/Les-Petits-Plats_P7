@@ -283,6 +283,18 @@ h2 {
   overflow-x: hidden;
 }
 
+::-webkit-scrollbar{
+  width: 10px;
+  background: #3282f7;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: white;
+  box-shadow: 0;
+  border-radius: 5px;
+}
+
+
 .closeIcon {
   width: 20px;
   height: 20px;
