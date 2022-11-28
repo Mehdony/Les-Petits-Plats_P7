@@ -282,13 +282,16 @@ h2 {
 .tags-container {
   overflow-x: hidden;
 }
+/* .ingredient-tags{
+  overflow-x: hidden;
+} */
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 10px;
-  background: #3282f7;
+
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   background-color: white;
   box-shadow: 0;
   border-radius: 5px;
@@ -306,6 +309,7 @@ h2 {
   display: none;
   background-color: #3282f7;
   max-height: 300px;
+  overflow-y: scroll;
 }
 
 #appliance-tags {
@@ -313,6 +317,7 @@ h2 {
   background-color: #68d9a4;
   max-height: 300px;
   padding: 10px;
+  overflow-y: scroll;
 }
 
 #ustensil-tags {
@@ -320,6 +325,7 @@ h2 {
   background-color: #ed6454;
   max-height: 300px;
   padding: 10px;
+  overflow-y: scroll;
 }
 
 #tags {

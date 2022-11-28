@@ -416,45 +416,54 @@ refreshUI();
 let click = false;
 
 const inputContainer = document.querySelector(".ingredients_input");
+const blue = document.querySelector("#ingredient-tags");
+const box = document.querySelector(".input_container");
 inputContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#ingredient-tags").style.display = "block";
-    inputContainer.style.borderRadius = "5px 5px 0 0";
+    box.style.borderRadius = "5px 5px 0 0";
+    blue.style.borderRadius = "0 0 5px 5px";
     inputContainer.style.width = "100%";
     click = true;
   } else {
     document.querySelector("#ingredient-tags").style.display = "none";
-    inputContainer.style.borderRadius = "5px";
+    box.style.borderRadius = "5px";
     inputContainer.style.width = "170px";
     click = false;
   }
 });
 
 const inputApplianceContainer = document.querySelector(".appliance_input");
+const green = document.querySelector("#appliance-tags");
+const boxGreen = document.querySelector(".input_container-green");  
 inputApplianceContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#appliance-tags").style.display = "block";
-    inputApplianceContainer.style.borderRadius = "5px 5px 0 0";
+    boxGreen.style.borderRadius = "5px 5px 0 0";
+    green.style.borderRadius = "0 0 5px 5px";
     inputApplianceContainer.style.width = "100%";
     click = true;
   } else {
     document.querySelector("#appliance-tags").style.display = "none";
-    inputApplianceContainer.style.borderRadius = "5px";
+    boxGreen.style.borderRadius = "5px";
     inputApplianceContainer.style.width = "170px";
     click = false;
   }
 });
 
 const inputUstensilContainer = document.querySelector(".ustensils_input");
+const red = document.querySelector("#ustensil-tags");  
+const boxRed = document.querySelector(".input_container-red");
 inputUstensilContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#ustensil-tags").style.display = "block";
-    inputUstensilContainer.style.borderRadius = "5px 5px 0 0";
+    boxRed.style.borderRadius = "5px 5px 0 0";
+    red.style.borderRadius = "0 0 5px 5px";
     inputUstensilContainer.style.width = "100%";
     click = true;
   } else {
     document.querySelector("#ustensil-tags").style.display = "none";
-    inputUstensilContainer.style.borderRadius = "5px";
+    boxRed.style.borderRadius = "5px";
     inputUstensilContainer.style.width = "170px";
     click = false;
   }
