@@ -16,7 +16,7 @@ let selectedTags = [];
 let mainStr = "";
 let mainSearch = false;
 
-//  main search
+//  Gestion de la recherche principale ( par nom par ingredient ou par description )
 document.querySelector(".main-search").addEventListener("input", (e) => {
   const str = e.target.value;
   mainStr = str;
@@ -51,48 +51,17 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
   }
 });
 
-
 // Recherche par ingrédient via l'input de saisie
 document.querySelector(".ingredients_input").addEventListener("input", (e) => {
-  const str = e.target.value;
-
   updateIngredientsTags();
 });
 
 document.querySelector(".appliance_input").addEventListener("input", (e) => {
-  const str = e.target.value;
-  if (str.length) {
-    const filteredRecipes = datas.recipes.filter((recipe) => {
-      let correspond = false;
-      recipe.appliance.toLowerCase().includes(str.toLowerCase())
-        ? (correspond = true)
-        : (correspond = false);
-      return correspond;
-    });
-    document.querySelector(".recipes-container").innerHTML = "";
-    filteredRecipes.map((recipe) => {
-      displayRecipe(recipe);
-    });
-  }
+  updateAppliancesTags();
 });
 
 document.querySelector(".ustensils_input").addEventListener("input", (e) => {
-  const str = e.target.value;
-  if (str.length) {
-    const filteredRecipes = datas.recipes.filter((recipe) => {
-      let correspond = false;
-      recipe.ustensils.forEach((ustensil) => {
-        ustensil.toLowerCase().includes(str.toLowerCase())
-          ? (correspond = true)
-          : (correspond = false);
-      });
-      return correspond;
-    });
-    document.querySelector(".recipes-container").innerHTML = "";
-    filteredRecipes.map((recipe) => {
-      displayRecipe(recipe);
-    });
-  }
+  updateUstensilsTags();
 });
 
 //  On actualise les recettes en fonction des tags sélectionnés
@@ -106,20 +75,14 @@ const searchByTags = () => {
           recipe.ingredients.some(
             (ingredient) => ingredient.ingredient.toLowerCase() === tag.value
           );
-        console.log("CONSOLE LOG DE RESULT", result);
       } else if (tag.type === "appliance") {
         result = result && recipe.appliance.toLowerCase() === tag.value;
       } else if (tag.type === "ustensil") {
         result = result && recipe.ustensils.includes(tag.value);
       }
-
-      //    completer avec les autres types de tags
     });
     return result;
   });
-
-  console.log("CONSOLE LOG DE FILTERED RECIPES ", filteredRecipes);
-  console.log("CONSOLE.LOG DE SELECTED TAGS", selectedTags);
 
   refreshUI();
 };
@@ -321,28 +284,8 @@ const createBlueTag = () => {
       });
     });
   });
-  // onclick delete tag
 };
 
-function deleteTag(e) {
-  console.log(e.target);
-  e.currentTarget.remove();
-  updateIngredientsTags();
-  selectedTags = selectedTags.filter((tag) => {
-    return tag.value !== e.target.getAttribute("data-tag");
-  });
-  searchByTags();
-  console.log(selectedTags);
-
-  console.log(filteredRecipes);
-
-  if (selectedTags.length === 0) {
-    filteredRecipes = recipes;
-  }
-
-  console.log(filteredRecipes);
-  refreshUI();
-}
 
 const createGreenTag = () => {
   const applianceLi = document.querySelectorAll(".appliance-tag");
@@ -402,6 +345,27 @@ const createRedTag = () => {
   });
 };
 
+
+function deleteTag(e) {
+  console.log(e.target);
+  e.currentTarget.remove();
+  updateIngredientsTags();
+  selectedTags = selectedTags.filter((tag) => {
+    return tag.value !== e.target.getAttribute("data-tag");
+  });
+  searchByTags();
+  console.log(selectedTags);
+
+  console.log(filteredRecipes);
+
+  if (selectedTags.length === 0) {
+    filteredRecipes = recipes;
+  }
+
+  console.log(filteredRecipes);
+  refreshUI();
+}
+
 // rafrachissement de l'interface utilisateur
 const refreshUI = () => {
   document.querySelector(".recipes-container").innerHTML = "";
@@ -412,10 +376,7 @@ const refreshUI = () => {
   updateIngredientsTags();
   updateAppliancesTags();
   updateUstensilsTags();
-  // console.log(selectedTags);
-  // ***********************************************************************************
 
-  // ***********************************************************************************
 };
 
 refreshUI();
