@@ -33,21 +33,20 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
     mainSearch = true;
     console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
-  if (filteredRecipes.length === 0) {
-    document.querySelector(".recipes-container").innerHTML = `
+    if (filteredRecipes.length === 0) {
+      document.querySelector(".recipes-container").innerHTML = `
     <div class="no-result">
       <p>Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>
     </div>
     `;
-  
-  } else {
-    refreshUI();
-  }
-    if (str.length < 3 ) {
-      mainSearch = false;
-      filteredRecipes = datas.recipes;
+    } else {
       refreshUI();
     }
+  }
+  if (str.length < 3) {
+    mainSearch = false;
+    filteredRecipes = datas.recipes;
+    refreshUI();
   }
 });
 
@@ -286,7 +285,6 @@ const createBlueTag = () => {
   });
 };
 
-
 const createGreenTag = () => {
   const applianceLi = document.querySelectorAll(".appliance-tag");
   applianceLi.forEach((li) => {
@@ -345,7 +343,6 @@ const createRedTag = () => {
   });
 };
 
-
 function deleteTag(e) {
   console.log(e.target);
   e.currentTarget.remove();
@@ -376,7 +373,6 @@ const refreshUI = () => {
   updateIngredientsTags();
   updateAppliancesTags();
   updateUstensilsTags();
-
 };
 
 refreshUI();
@@ -388,14 +384,14 @@ let click = false;
 const inputContainer = document.querySelector(".ingredients_input");
 const blue = document.querySelector("#ingredient-tags");
 const box = document.querySelector(".input_container");
-const blueArrow = document.querySelector("#blue-arrow"); 
+const blueArrow = document.querySelector("#blue-arrow");
 inputContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#ingredient-tags").style.display = "block";
     box.style.borderRadius = "5px 5px 0 0";
     blue.style.borderRadius = "0 0 5px 5px";
     inputContainer.style.width = "100%";
-    blueArrow.style.transform = "rotate(180deg)"; 
+    blueArrow.style.transform = "rotate(180deg)";
     click = true;
   } else {
     document.querySelector("#ingredient-tags").style.display = "none";
@@ -408,15 +404,15 @@ inputContainer.addEventListener("click", (e) => {
 
 const inputApplianceContainer = document.querySelector(".appliance_input");
 const green = document.querySelector("#appliance-tags");
-const boxGreen = document.querySelector(".input_container-green");  
-const greenArrow = document.querySelector("#green-arrow"); 
+const boxGreen = document.querySelector(".input_container-green");
+const greenArrow = document.querySelector("#green-arrow");
 inputApplianceContainer.addEventListener("click", (e) => {
   if (!click) {
     document.querySelector("#appliance-tags").style.display = "block";
     boxGreen.style.borderRadius = "5px 5px 0 0";
     green.style.borderRadius = "0 0 5px 5px";
     inputApplianceContainer.style.width = "100%";
-    greenArrow.style.transform = "rotate(180deg)"; 
+    greenArrow.style.transform = "rotate(180deg)";
     click = true;
   } else {
     document.querySelector("#appliance-tags").style.display = "none";
@@ -428,7 +424,7 @@ inputApplianceContainer.addEventListener("click", (e) => {
 });
 
 const inputUstensilContainer = document.querySelector(".ustensils_input");
-const red = document.querySelector("#ustensil-tags");  
+const red = document.querySelector("#ustensil-tags");
 const boxRed = document.querySelector(".input_container-red");
 const redArrow = document.querySelector("#red-arrow");
 inputUstensilContainer.addEventListener("click", (e) => {
@@ -437,7 +433,7 @@ inputUstensilContainer.addEventListener("click", (e) => {
     boxRed.style.borderRadius = "5px 5px 0 0";
     red.style.borderRadius = "0 0 5px 5px";
     inputUstensilContainer.style.width = "100%";
-    redArrow.style.transform = "rotate(180deg)"; 
+    redArrow.style.transform = "rotate(180deg)";
     click = true;
   } else {
     document.querySelector("#ustensil-tags").style.display = "none";
