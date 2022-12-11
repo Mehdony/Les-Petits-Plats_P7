@@ -46,12 +46,21 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
     filteredRecipes = [...filtered];
     console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
-    refreshUI();
-    if (str.length <= 3) {
-      mainSearch = false;
-      filteredRecipes = datas.recipes;
+    
+    if (filteredRecipes.length === 0) {
+      document.querySelector(".recipes-container").innerHTML = `
+    <div class="no-result">
+      <p>Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>
+    </div>
+    `;
+    } else {
       refreshUI();
     }
+  }
+  if (str.length <= 3) {
+    mainSearch = false;
+    filteredRecipes = datas.recipes;
+    refreshUI();
   }
 });
 
