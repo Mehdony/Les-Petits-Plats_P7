@@ -69,15 +69,12 @@ const searchByTags = () => {
     let result = true;
     selectedTags.forEach((tag) => {
       if (tag.type === "ingredient") {
-        result =
-          result &&
-          recipe.ingredients.some(
-            (ingredient) => ingredient.ingredient.toLowerCase() === tag.value
-          );
+        result = result && recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase() === tag.value );
       } else if (tag.type === "appliance") {
         result = result && recipe.appliance.toLowerCase() === tag.value;
       } else if (tag.type === "ustensil") {
-        result = result && recipe.ustensils.includes(tag.value);
+        const lowercased = recipe.ustensils.map(name => name.toLowerCase());
+        result = result && lowercased.includes(tag.value);
       }
     });
     return result;
@@ -108,6 +105,7 @@ const updateIngredientsTags = () => {
     });
   });
 
+  // si l'ingredients est contenu dans selectedTags on le supprime de la liste ingredientsTags
   ingredientsTags = ingredientsTags.filter((ingredient) => {
     return !selectedTags.some((tag) => tag.value === ingredient);
   });
@@ -118,11 +116,13 @@ const updateIngredientsTags = () => {
   const ingredientsList = document.createElement("ul");
   ingredientsList.classList.add("tags-ul");
 
+  // suppression de l'ancienne liste
   const ul = ingredientsContainer.querySelector(".tags-ul");
   if (ul) {
     ul.remove();
   }
 
+  // actualisation de la liste avec ingredientsTags ( excluant les tags déjà sélectionnés )
   ingredientsContainer.appendChild(ingredientsList);
   ingredientsTags.forEach((ingredient) => {
     ingredientsList.innerHTML += `<li class="ingredient-tag">${ingredient}</li>`;
@@ -276,7 +276,7 @@ const createBlueTag = () => {
         deleteTag(e);
         if (mainSearch) {
           filteredRecipes = recipes.filter((recipe) => {
-            return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
+            return recipe.name.toLowerCase().includes(mainStr.toLowerCase()) || recipe.description.toLowerCase().includes(mainStr.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainStr.toLowerCase()));
           });
           searchByTags();
         }
@@ -305,7 +305,7 @@ const createGreenTag = () => {
         deleteTag(e);
         if (mainSearch) {
           filteredRecipes = recipes.filter((recipe) => {
-            return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
+            return recipe.name.toLowerCase().includes(mainStr.toLowerCase()) || recipe.description.toLowerCase().includes(mainStr.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainStr.toLowerCase()));
           });
           searchByTags();
         }
@@ -334,7 +334,7 @@ const createRedTag = () => {
         deleteTag(e);
         if (mainSearch) {
           filteredRecipes = recipes.filter((recipe) => {
-            return recipe.name.toLowerCase().includes(mainStr.toLowerCase());
+            return recipe.name.toLowerCase().includes(mainStr.toLowerCase()) || recipe.description.toLowerCase().includes(mainStr.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainStr.toLowerCase()));
           });
           searchByTags();
         }
@@ -378,7 +378,6 @@ const refreshUI = () => {
 refreshUI();
 
 // Ouverture et fermeture du menu filtre
-
 let click = false;
 
 const inputContainer = document.querySelector(".ingredients_input");
@@ -443,5 +442,3 @@ inputUstensilContainer.addEventListener("click", (e) => {
     click = false;
   }
 });
-
-//--------------------------------------------------------------
