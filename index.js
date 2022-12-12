@@ -15,6 +15,7 @@ let ustensilsTags = [];
 let selectedTags = [];
 let mainStr = "";
 let mainSearch = false;
+let searchLenght = 0;
 
 function filterIng(elt, str) {
   for (let i = 0; i < elt.ingredients.length; i++) {
@@ -28,12 +29,16 @@ function filterIng(elt, str) {
 // use for loop methhod for main search
 document.querySelector(".main-search").addEventListener("input", (e) => {
   const str = e.target.value;
+  let searchRecipes =
+    str.length < searchLenght ? [...datas.recipes] : [...filteredRecipes];
+  console.log("clg de search recipe ", searchRecipes);
+
   mainStr = str;
   let filtered = [];
   if (str.length >= 3) {
     console.log(str);
-    for (let i = 0; i < filteredRecipes.length; i++) {
-      const elt = filteredRecipes[i];
+    for (let i = 0; i < searchRecipes.length; i++) {
+      const elt = searchRecipes[i];
       if (
         elt.name.toLowerCase().includes(str.toLowerCase()) ||
         filterIng(elt, str) ||
@@ -42,26 +47,35 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
         filtered.push(elt);
       }
     }
+
     mainSearch = true;
-    filteredRecipes = [...filtered];
-    console.log(filteredRecipes);
     document.querySelector(".recipes-container").innerHTML = "";
-    
-    if (filteredRecipes.length === 0) {
+
+    filteredRecipes = [...filtered];
+
+    if (filteredRecipes.length > 0) {
+      refreshUI();
+    } else {
       document.querySelector(".recipes-container").innerHTML = `
     <div class="no-result">
       <p>Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>
     </div>
     `;
-    } else {
-      refreshUI();
     }
   }
-  if (str.length <= 3) {
+  if (str.length < searchLenght && selectedTags.length === 0) {
     mainSearch = false;
-    filteredRecipes = datas.recipes;
+    filteredRecipes = [...searchRecipes];
+    console.log("blablabla" ,filteredRecipes);
+    refreshUI();
+  } else if (str.length < searchLenght && selectedTags.length > 0) {
+    console.log("je suis la")
+    mainSearch = false;
+    filteredRecipes = [...searchRecipes];
+    searchByTags();
     refreshUI();
   }
+  searchLenght = str.length;
 });
 
 // Recherche par ingrédient via l'input de saisie
@@ -310,7 +324,7 @@ const createBlueTag = () => {
         } else {
           filteredRecipes = [...recipes];
           searchByTags();
-        } 
+        }
       });
     });
   });
@@ -349,7 +363,7 @@ const createGreenTag = () => {
             );
           });
           searchByTags();
-        }else {
+        } else {
           // document.querySelector(".recipes-container").innerHTML = "";
           filteredRecipes = recipes;
           searchByTags();
@@ -392,7 +406,7 @@ const createRedTag = () => {
             );
           });
           searchByTags();
-        }else {
+        } else {
           // document.querySelector(".recipes-container").innerHTML = "";
           filteredRecipes = recipes;
           searchByTags();
