@@ -347,7 +347,7 @@ const createGreenTag = () => {
           });
           searchByTags();
         }else {
-          document.querySelector(".recipes-container").innerHTML = "";
+          // document.querySelector(".recipes-container").innerHTML = "";
           filteredRecipes = recipes;
           searchByTags();
         }
@@ -388,6 +388,10 @@ const createRedTag = () => {
               )
             );
           });
+          searchByTags();
+        }else {
+          // document.querySelector(".recipes-container").innerHTML = "";
+          filteredRecipes = recipes;
           searchByTags();
         }
       });
