@@ -49,9 +49,13 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
     `;
     } 
   }
-  if (str.length < 3 ) {
+  if (str.length < searchLenght && selectedTags.length === 0) {
     mainSearch = false;
     filteredRecipes = datas.recipes;
+    refreshUI();
+  } else if (str.length < searchLenght && selectedTags.length > 0) {
+    mainSearch = false;
+    searchByTags();
     refreshUI();
   }
   searchLenght = str.length;
@@ -286,7 +290,7 @@ const createBlueTag = () => {
       p.addEventListener("click", (e) => {
         deleteTag(e);
         if (mainSearch) {
-          filteredRecipes = recipes.filter((recipe) => {
+          filteredRecipes = [...filteredRecipes].filter((recipe) => {
             return (
               recipe.name.toLowerCase().includes(mainStr.toLowerCase()) ||
               recipe.description
@@ -301,10 +305,9 @@ const createBlueTag = () => {
           });
           searchByTags();
         } else {
-          document.querySelector(".recipes-container").innerHTML = "";
-          filteredRecipes = recipes;
+          filteredRecipes = [...recipes];
           searchByTags();
-        }
+        } 
       });
     });
   });
@@ -386,10 +389,6 @@ const createRedTag = () => {
             );
           });
           searchByTags();
-        }else {
-          document.querySelector(".recipes-container").innerHTML = "";
-          filteredRecipes = recipes;
-          searchByTags();
         }
       });
     });
@@ -404,9 +403,6 @@ function deleteTag(e) {
     return tag.value !== e.target.getAttribute("data-tag");
   });
   searchByTags();
-  console.log(selectedTags);
-
-  console.log(filteredRecipes);
 
   if (selectedTags.length === 0) {
     filteredRecipes = recipes;
