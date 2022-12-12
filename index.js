@@ -55,6 +55,7 @@ document.querySelector(".main-search").addEventListener("input", (e) => {
     refreshUI();
   } else if (str.length < searchLenght && selectedTags.length > 0) {
     mainSearch = false;
+    filteredRecipes = datas.recipes;
     searchByTags();
     refreshUI();
   }
