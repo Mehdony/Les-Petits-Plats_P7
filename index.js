@@ -83,11 +83,15 @@ const searchByTags = () => {
     let result = true;
     selectedTags.forEach((tag) => {
       if (tag.type === "ingredient") {
-        result = result && recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase() === tag.value );
+        result =
+          result &&
+          recipe.ingredients.some(
+            (ingredient) => ingredient.ingredient.toLowerCase() === tag.value
+          );
       } else if (tag.type === "appliance") {
         result = result && recipe.appliance.toLowerCase() === tag.value;
       } else if (tag.type === "ustensil") {
-        const lowercased = recipe.ustensils.map(name => name.toLowerCase());
+        const lowercased = recipe.ustensils.map((name) => name.toLowerCase());
         result = result && lowercased.includes(tag.value);
       }
     });
@@ -289,11 +293,24 @@ const createBlueTag = () => {
       p.addEventListener("click", (e) => {
         deleteTag(e);
         if (mainSearch) {
-          filteredRecipes = recipes.filter((recipe) => {
-            return recipe.name.toLowerCase().includes(mainStr.toLowerCase()) || recipe.description.toLowerCase().includes(mainStr.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainStr.toLowerCase()));
+          filteredRecipes = [...filteredRecipes].filter((recipe) => {
+            return (
+              recipe.name.toLowerCase().includes(mainStr.toLowerCase()) ||
+              recipe.description
+                .toLowerCase()
+                .includes(mainStr.toLowerCase()) ||
+              recipe.ingredients.some((ingredient) =>
+                ingredient.ingredient
+                  .toLowerCase()
+                  .includes(mainStr.toLowerCase())
+              )
+            );
           });
           searchByTags();
-        }
+        } else {
+          filteredRecipes = [...recipes];
+          searchByTags();
+        } 
       });
     });
   });
@@ -319,8 +336,22 @@ const createGreenTag = () => {
         deleteTag(e);
         if (mainSearch) {
           filteredRecipes = recipes.filter((recipe) => {
-            return recipe.name.toLowerCase().includes(mainStr.toLowerCase()) || recipe.description.toLowerCase().includes(mainStr.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainStr.toLowerCase()));
+            return (
+              recipe.name.toLowerCase().includes(mainStr.toLowerCase()) ||
+              recipe.description
+                .toLowerCase()
+                .includes(mainStr.toLowerCase()) ||
+              recipe.ingredients.some((ingredient) =>
+                ingredient.ingredient
+                  .toLowerCase()
+                  .includes(mainStr.toLowerCase())
+              )
+            );
           });
+          searchByTags();
+        }else {
+          // document.querySelector(".recipes-container").innerHTML = "";
+          filteredRecipes = recipes;
           searchByTags();
         }
       });
@@ -348,8 +379,22 @@ const createRedTag = () => {
         deleteTag(e);
         if (mainSearch) {
           filteredRecipes = recipes.filter((recipe) => {
-            return recipe.name.toLowerCase().includes(mainStr.toLowerCase()) || recipe.description.toLowerCase().includes(mainStr.toLowerCase()) || recipe.ingredients.some((ingredient) => ingredient.ingredient.toLowerCase().includes(mainStr.toLowerCase()));
+            return (
+              recipe.name.toLowerCase().includes(mainStr.toLowerCase()) ||
+              recipe.description
+                .toLowerCase()
+                .includes(mainStr.toLowerCase()) ||
+              recipe.ingredients.some((ingredient) =>
+                ingredient.ingredient
+                  .toLowerCase()
+                  .includes(mainStr.toLowerCase())
+              )
+            );
           });
+          searchByTags();
+        }else {
+          // document.querySelector(".recipes-container").innerHTML = "";
+          filteredRecipes = recipes;
           searchByTags();
         }
       });
@@ -365,9 +410,6 @@ function deleteTag(e) {
     return tag.value !== e.target.getAttribute("data-tag");
   });
   searchByTags();
-  console.log(selectedTags);
-
-  console.log(filteredRecipes);
 
   if (selectedTags.length === 0) {
     filteredRecipes = recipes;
